@@ -97,7 +97,7 @@ namespace Microsoft.AspNetCore.Mvc.Infrastructure
             {
                 if (contentTypes.Count == 0)
                 {
-                    _logger.SelectingOutputFormatterUsingAcceptHeader();
+                    _logger.SelectingOutputFormatterUsingAcceptHeader(acceptableMediaTypes);
 
                     // Use whatever formatter can meet the client's request
                     selectedFormatter = SelectFormatterUsingSortedAcceptHeaders(
@@ -107,7 +107,7 @@ namespace Microsoft.AspNetCore.Mvc.Infrastructure
                 }
                 else
                 {
-                    _logger.SelectingOutputFormatterUsingAcceptHeaderAndExplicitContentTypes(contentTypes);
+                    _logger.SelectingOutputFormatterUsingAcceptHeaderAndExplicitContentTypes(acceptableMediaTypes, contentTypes);
 
                     // Verify that a content type from the context is compatible with the client's request
                     selectedFormatter = SelectFormatterUsingSortedAcceptHeadersAndContentTypes(
@@ -130,8 +130,6 @@ namespace Microsoft.AspNetCore.Mvc.Infrastructure
 
             if (selectFormatterWithoutRegardingAcceptHeader)
             {
-                _logger.SelectingOutputFormatterWithoutUsingAcceptHeader();
-
                 if (contentTypes.Count == 0)
                 {
                     _logger.SelectingOutputFormatterWithoutUsingContentTypes();
